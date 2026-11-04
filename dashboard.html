@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Control Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="sidebar">
+        <h2 id="roleTitle">Control Center 🚨</h2>
+        <div id="trackingStatus">Status: Waiting for activity...</div>
+        <hr style="border-color: #445566; margin: 15px 0;">
+        <div id="controlPanel"></div>
+        <div id="incidentsContainer" style="margin-top: 20px;">
+            <h3>Active Emergency</h3>
+            <div id="incidentList">No active emergencies.</div>
+        </div>
+    </div>
+    
+    <div id="dashboardMap"></div>
+
+    <!-- Leaflet & Socket.io JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Main JS logic -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+/* General Layout Styling */
+body {
+    margin: 0;
+    display: flex;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-color: #f4f6f9;
+}
+
+/* Sidebar Styling */
+#sidebar {
+    width: 340px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#sidebar h2 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #ecf0f1;
+    border-bottom: 2px solid #34495e;
+    padding-bottom: 10px;
+}
+
+#sidebar h3 {
+    font-size: 18px;
+    color: #bdc3c7;
+    margin-top: 20px;
+}
+
+/* Map Area */
+#dashboardMap {
+    flex-grow: 1;
+    height: 100vh;
+}
+
+/* Alert Card Styling */
+.alert-card {
+    background: #e74c3c;
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert-card h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.alert-card p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+/* Uploaded Image Preview */
+.alert-card img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Action Button */
+.btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #219653;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Tracking Status Text */
+#trackingStatus {
+    margin-top: 12px;
+    font-style: italic;
+    color: #f1c40f;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    border-radius: 4px;
+}

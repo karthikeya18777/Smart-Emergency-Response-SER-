@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency SOS - One Click</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #fff5f5; padding: 50px; }
+        .sos-btn {
+            background: #dc3545; color: white; border: none; border-radius: 50%;
+            width: 200px; height: 200px; font-size: 45px; font-weight: bold;
+            box-shadow: 0px 10px 25px rgba(220, 53, 69, 0.5); cursor: pointer;
+            margin-top: 25px; transition: transform 0.1s;
+        }
+        .sos-btn:active { transform: scale(0.95); }
+        input[type="file"] { margin: 20px 0; font-size: 16px; }
+        #status { font-size: 18px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>🚨 Emergency SOS</h1>
+    <p>Tap the button below for instant emergency help:</p>
+    
+    <input type="file" id="incidentPhoto" accept="image/*" capture="environment">
+    <br>
+    
+    <button class="sos-btn" onclick="sendSOS()">SOS</button>
+    <p id="status"></p>
+
+    <script>
+        const socket = io();
+
+        function sendSOS() {
+            const status = document.getElementById('status');
+            status.style.color = "orange";
+            status.innerText = "Fetching live GPS location...";
+
+            const fileInput = document.getElementById('incidentPhoto');
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    if (fileInput.files.length > 0) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            postData(lat, lng, e.target.result);
+                        };
+                        reader.readAsDataURL(fileInput.files[0]);
+                    } else {
+                        postData(lat, lng, null);
+                    }
+                }, error => {
+                    status.style.color = "red";
+                    status.innerText = "GPS Error! Please allow location permissions.";
+                }, { enableHighAccuracy: true });
+            } else {
+                status.style.color = "red";
+                status.innerText = "Geolocation is not supported by your browser.";
+            }
+        }
+
+        async function postData(lat, lng, photoBase64) {
+            const payload = {
+                latitude: lat,
+                longitude: lng,
+                photo: photoBase64
+            };
+
+            try {
+                const response = await fetch("/api/incidents", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const status = document.getElementById('status');
+                    status.style.color = "green";
+                    status.innerText = "✅ SOS Sent! Ambulance & Traffic Control Alerted.";
+                } else {
+                    throw new Error("Failed to send alert.");
+                }
+            } catch (err) {
+                const status = document.getElementById('status');
+                status.style.color = "red";
+                status.innerText = "Server connection error.";
+            }
+        }
+    </script>
+</body>
+</html>
